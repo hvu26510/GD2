@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GD2.Services;
+using GD2.Models;
 
 namespace GD2.Controllers
 {
@@ -12,8 +13,9 @@ namespace GD2.Controllers
             _authenticationService = authenticationService;
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string message = null)
         {
+            ViewBag.ErrorMessage = message; 
             return View();
         }
         [HttpPost]
@@ -26,5 +28,14 @@ namespace GD2.Controllers
             ViewBag.ErrorMessage = "Thong tin dang nhap chua chinh xac";
             return View();
         }
+
+
+        public IActionResult Profile()
+        {
+            Account user =  _authenticationService.GetCurrentUser();
+
+            return View(user); 
+        }
     }
 }
+
